@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Кривая Леви</title>
+        <script type="text/javascript" src="js/base.js"></script>
+        <script type="text/javascript" src="js/fBuilder.js"></script>
+        <script type="text/javascript" src="js/levi.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    </head>
+    <body>
+        <a href='index.html'>К списку</a><br/>
+        <button id="clearBtn" onclick='clearScreen()'>Очистить</button>
+        <button id="drawBtn" onclick='drawFractal(builder, drawer)'>Нарисовать фрактал</button><br/>
+        <canvas id ="paintBox" style="width: 729px; height: 729px;" width="729" height="729"></canvas>
+        <script type="text/javascript">
+            maxDepth = 18;
+            var builder = new FractalBuilder();
+            builder.init('F');
+            builder.setRule('F', '-F++F-');
+            var drawer = new LeviDrawer();
+            drawer.setCanvas('paintBox');
+            drawer.setDivider(Math.sqrt(2));
+            
+            builder.attachAction('F', drawer.drawLine, drawer);
+            builder.attachAction('-', drawer.turnLeft, drawer);
+            builder.attachAction('+', drawer.turnRight, drawer);
+        </script>
+    </body>
+</html>
