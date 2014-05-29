@@ -8,6 +8,8 @@ var FractalBuilder = function() {
     this.rules = {};
     // attached actions
     this.actions = {};
+    // set type of produce
+    this.recursion = false;
 }
 
 /**
@@ -67,13 +69,30 @@ FractalBuilder.prototype.produce = function(depth) {
     return rule;
 }
 
+FractalBuilder.prototype.produceRecursivelly = function(depth, rule) {
+    if (typeof(rule) === 'undefined') rule = this.initStr;
+    if (depth <= 1) return rule;
+    var newRule = '', length = rule.length;
+    // move through all charaters in current rule
+    for (var j = 0; j < length; j++) {
+        if (typeof(this.rules[rule[j]]) !== 'undefined') {
+            // if transformation found -> transform charater to string
+            newRule += this.rules[rule[j]];
+        } else {
+            // else just add this character
+            newRule += rule[j];
+        }
+    }
+    return this.produceRecursivelly(depth-1, newRule);
+}
+
 /**
  * Draw fractal with current depth
  * @param Number depth
  */
 FractalBuilder.prototype.draw = function(depth) {
     // get fractal rule
-    var rule = this.produce(depth);
+    var rule = (this.recursion)? this.produceRecursivelly(depth) : this.produce(depth);
     // get rule length
     var length = rule.length;
     // move through all characters in rule

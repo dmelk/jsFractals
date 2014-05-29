@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Кривая Минского</title>
+        <title>Кривая Минского (рекурсия)</title>
         <script type="text/javascript" src="js/base.js"></script>
         <script type="text/javascript" src="js/fBuilder.js"></script>
         <script type="text/javascript" src="js/minkovsky.js"></script>
@@ -15,6 +15,7 @@
         <script type="text/javascript">
             maxDepth = 8;
             var builder = new FractalBuilder();
+            builder.recursion = true;
             builder.init('F');
             builder.setRule('F', 'F-F+F+FF-F-F+F');
             var drawer = new MinkovskyDrawer();
