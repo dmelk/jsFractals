@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Растение</title>
+        <script type="text/javascript" src="js/base.js"></script>
+        <script type="text/javascript" src="js/fBuilder.js"></script>
+        <script type="text/javascript" src="js/plant.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    </head>
+    <body>
+        <a href='index.html'>К списку</a><br/>
+        <button id="clearBtn" onclick='clearScreen()'>Очистить</button>
+        <button id="drawBtn" onclick='drawFractal(builder, drawer)'>Нарисовать фрактал</button><br/>
+        <canvas id ="paintBox" style="width: 729px; height: 729px;" width="729" height="729"></canvas>
+        <script type="text/javascript">
+            maxDepth = 10;
+            var builder = new FractalBuilder();
+            builder.init('XF');
+            builder.setRule('X', 'F-[[X]+X]+F[+FX]-X');
+            builder.setRule('F', 'FF');
+            var drawer = new PlantDrawer();
+            drawer.setCanvas('paintBox');
+            drawer.setDivider(1.9);
+            
+            builder.attachAction('F', drawer.drawLine, drawer);
+            builder.attachAction('-', drawer.turnLeft, drawer);
+            builder.attachAction('+', drawer.turnRight, drawer);
+            builder.attachAction('[', drawer.saveCoords, drawer);
+            builder.attachAction(']', drawer.loadCoords, drawer);
+        </script>
+    </body>
+</html>
